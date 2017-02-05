@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<button type="button" class="btn btn-primary" ng-click="$ctrl.changeTab(0)">First button</button>
+		<button type="button" class="btn btn-primary" ng-click="$ctrl.changeTab(1)">Second button</button>
+	</div>
+	<div class="panel-content">
+		<div ng-show="$ctrl.arrayTabs[0]">
+			First form
+		</div>
+		<div ng-show="$ctrl.arrayTabs[1]">
+			Second form
+		</div>
+	</div>
+</div>
+
+<button type="button" class="btn" ng-hide="$ctrl.arrayTabs[0]" ng-click="$ctrl.previousTab()">
+	Previous
+</button>
+<button type="button" class="btn to-the-right" ng-hide="$ctrl.arrayTabs[$ctrl.arrayTabs.length - 1]" ng-click="$ctrl.nextTab()">
+	Next
+</button>
