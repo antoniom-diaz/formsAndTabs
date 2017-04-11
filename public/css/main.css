@@ -13,6 +13,15 @@ h1 {
 	padding: 20px;
 }
 
+.tab-button {
+	display: inline-block;
+	margin-right:5px;
+}
+
+.panel-content {
+	padding: 20px;
+}
+
 .to-the-right {
 	float: right;
 }

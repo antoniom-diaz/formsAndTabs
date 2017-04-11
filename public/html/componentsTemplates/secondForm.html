@@ -1,0 +1,22 @@
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Month</th>
+				<th>Price</th>
+				<th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="i in $ctrl.range(12)">
+				<td>{{$ctrl.getMonth(i)}}</td>
+				<td>
+					<input type="text" class="form-control">
+				</td>
+				<td>
+					<input type="text" class="form-control">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

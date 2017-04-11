@@ -1,14 +1,18 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<button type="button" class="btn btn-primary" ng-click="$ctrl.changeTab(0)">First button</button>
-		<button type="button" class="btn btn-primary" ng-click="$ctrl.changeTab(1)">Second button</button>
+		<div ng-repeat="formName in $ctrl.formNames" class="tab-button">
+			<button type="button" class="btn btn-primary" ng-show="$ctrl.arrayTabs[$index]" 
+				ng-click="$ctrl.changeTab($index)">{{formName}}</button>
+			<button type="button" class="btn" ng-hide="$ctrl.arrayTabs[$index]"
+				ng-click="$ctrl.changeTab($index)">{{formName}}</button>
+		</div>
 	</div>
 	<div class="panel-content">
 		<div ng-show="$ctrl.arrayTabs[0]">
-			First form
+			<first-form></first-form>
 		</div>
 		<div ng-show="$ctrl.arrayTabs[1]">
-			Second form
+			<second-form></second-form>
 		</div>
 	</div>
 </div>
