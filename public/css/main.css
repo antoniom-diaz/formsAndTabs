@@ -25,3 +25,19 @@ h1 {
 .to-the-right {
 	float: right;
 }
+
+.error-msg {
+	padding: 20px;
+	background-color: #a2badb;
+	color: white;
+	border-style: solid;
+	border-color: #a2badb;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+.error-msg-header {
+	font-size: 20px;
+	font-weight: bolder;
+	margin-bottom: 10px;
+}

@@ -1,4 +1,4 @@
 <div class="form-group">
 	<label>{{$ctrl.label}}</label>
-	<input type="$ctrl.type" class="form-control">
+	<input type="{{$ctrl.type}}" class="form-control" ng-model="$ctrl.ngModel" min="{{$ctrl.min}}" max="{{$ctrl.max}}">
 </div>

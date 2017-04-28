@@ -8,12 +8,8 @@
 		</div>
 	</div>
 	<div class="panel-content">
-		<div ng-show="$ctrl.arrayTabs[0]">
-			<first-form></first-form>
-		</div>
-		<div ng-show="$ctrl.arrayTabs[1]">
-			<second-form></second-form>
-		</div>
+		<first-form on-tab-change="$ctrl.saveForm(appState)" ng-show="$ctrl.arrayTabs[0]"></first-form>
+		<second-form on-tab-change="$ctrl.saveForm(appState)" ng-show="$ctrl.arrayTabs[1]"></second-form>
 	</div>
 </div>
 

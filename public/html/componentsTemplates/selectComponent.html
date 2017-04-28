@@ -1,6 +1,7 @@
 <div class="form-group">
 	<label>{{$ctrl.label}}</label>
-	<select class="form-control">
-		<option ng-repeat="option in $ctrl.options" value="{{option.value}}" ng-model="">{{option.name}}</option>
+	<select class="form-control" 
+		ng-model="$ctrl.election" 
+		ng-options="option.name for option in $ctrl.options track by option.value">
 	</select>
 </div>

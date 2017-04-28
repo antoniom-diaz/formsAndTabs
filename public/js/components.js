@@ -1,16 +1,26 @@
-var appState = {};
-
 app.component("mainTable", {
 	controller: function() {
 		let ctrl = this;
 		
-		ctrl.test = function() {
-			return 'Prueba'
-		} 
-		
 		ctrl.arrayTabs = [true, false];
 		
 		ctrl.formNames = ["Initial parameters", "Mensual data"];
+		
+		ctrl.appState = {};
+		
+		ctrl.saveForm = function(appState) {
+			if (appState.validated == false) {
+				ctrl.changeTab(appState.indexForm);
+			}
+			
+			for (let key in appState) {
+				if (key != 'validated' && key != 'indexForm') {
+					ctrl.appState[key] = appState[key];
+				}
+			}
+			
+			console.log(ctrl.appState);
+		}
 		
 		ctrl.changeTab = index => {
 			for (var i = 0; i<ctrl.arrayTabs.length; i++) {
@@ -22,7 +32,7 @@ app.component("mainTable", {
 		
 		ctrl.nextTab = function() {
 			let activeTab;
-			
+						
 			for (var i = 0; i<ctrl.arrayTabs.length; i++) {
 				if (ctrl.arrayTabs[i]) {
 					activeTab = i;
@@ -51,9 +61,14 @@ app.component("mainTable", {
 });
 
 app.component('firstForm', {
+	bindings: {
+		onTabChange: '&',
+		ngShow: '<'
+	},
 	controller: function() {
 		let ctrl = this;
 		
+		ctrl.year = new Date().getFullYear();
 		ctrl.furnitureTypesLabel = 'Furniture types';
 		ctrl.furnitureTypesOptions = [{name: 'Armchair', value: 1},
 			{name: 'Wardrobe', value: 2},
@@ -82,18 +97,52 @@ app.component('firstForm', {
 		
 		ctrl.intervalLabel = 'Interval of comparison';
 		
-		ctrl.saveState = function() {
-			appState.yearPurchase = ctrl.yearPurchase;
-			appState.typeFurniture = ctrl.typeFurniture;
-			appState.monthPurchase = ctrl.monthPurchase;
-			appState.interval = ctrl.interval;
-			appState.coin = ctrl.coin;
+		let errorsObj = {
+				yearPurchase: 'Field Year of purchase has not been filled or has an incorrect value. Its value must be between 2012 and the current year.',
+				interval: 'Field Interval of comparison has not been filled or has an incorrect value. Its value must be between 12 and 24.'
 		}
+		
+		let checkForm = function(appState) {
+			
+			for (let key in appState) {
+				if (appState[key] == undefined) {
+					ctrl.errorValidation = true;
+					ctrl.errorText = errorsObj[key];
+					
+					return false;
+				}
+			}
+			
+			ctrl.errorValidation = false;
+			return true;
+		}
+		
+		ctrl.$onChanges = function(changeObj) {
+			let tabVisible = changeObj.ngShow;
+			let appState = {
+				yearPurchase: ctrl.yearPurchase,
+				typeFurniture: ctrl.typeFurniture,
+				monthPurchase: ctrl.monthPurchase,
+				interval: ctrl.interval,
+				coin: ctrl.coin,
+				indexForm: 0,
+			}
+			
+			if (tabVisible.previousValue == true && tabVisible.currentValue == false) {
+				appState.validated = checkForm(appState);
+				ctrl.onTabChange({appState: appState});
+			}
+		}
+			
 	},
 	templateUrl: 'html/componentsTemplates/firstForm.html',
 });
 
 app.component('secondForm', {
+	bindings: {
+		onTabChange: '&',
+		ngShow: '<'
+	},
 	controller: function() {
 		let ctrl = this;
 		
@@ -117,17 +166,46 @@ app.component('secondForm', {
 			
 			return (date.getYear() + 1900) + ' - ' + arrMonths[date.getMonth()];
 		}
+		
+		ctrl.$onChanges = function(changeObj) {
+			let tabVisible = changeObj.ngShow;
+			
+			if (tabVisible.previousValue == true && tabVisible.currentValue == false) {
+				ctrl.onTabChange({appState: {
+					antonio: 'antonio'
+				}});
+			}
+		}
 	},
 	templateUrl: 'html/componentsTemplates/secondForm.html',
 });
+
+app.component('errorMessage', {
+	bindings: {
+		ngShow: '<',
+		text: '<'
+	},
+	templateUrl: 'html/componentsTemplates/errorMessage.html'
+})
 
 app.component('selectComponent', {
 	bindings: {
 		label: '<',
 		options: '<',
+		ngModel: '='
 	},
 	controller: function() {
 		let ctrl = this;
+		
+		ctrl.$onInit = function() {
+			ctrl.election = ctrl.options[0];
+			
+			ctrl.ngModel = ctrl.election.value;
+		}
+		
+		ctrl.$doCheck = function() {
+			ctrl.ngModel = ctrl.election.value;
+		}
 	},
 	templateUrl: 'html/componentsTemplates/selectComponent.html',
 });
@@ -135,10 +213,14 @@ app.component('selectComponent', {
 app.component('inputComponent', {
 	bindings: {
 		label: '<',
-		type: '@'
+		type: '@',
+		min: '@',
+		max: '@',
+		ngModel: '='
 	},
 	controller: function() {
-		let ctrl = this;
+		console.log(this);
+		console.log(this.type);
 	},
 	templateUrl: 'html/componentsTemplates/inputComponent.html',
 });

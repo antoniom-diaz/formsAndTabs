@@ -1,9 +1,13 @@
-<select-component label="$ctrl.furnitureTypesLabel" options="$ctrl.furnitureTypesOptions" ng-model="$ctrl.typeFurniture"></select-component>
+<div ng-show="$ctrl.ngShow">
+	<error-message ng-show="$ctrl.errorValidation" text="$ctrl.errorText"></error-message>
+	
+	<select-component label="$ctrl.furnitureTypesLabel" options="$ctrl.furnitureTypesOptions" ng-model="$ctrl.typeFurniture"></select-component>
 
-<input-component label="$ctrl.yearLabel" type="text" ng-model="$ctrl.yearPurchase"></input-component>
-
-<select-component label="$ctrl.monthsLabel" options="$ctrl.monthsArray" ng-model="$ctrl.monthPurchase"></select-component>
-
-<input-component label="$ctrl.intervalLabel" type="text" ng-model="$ctrl.interval"></input-component>
-
-<select-component label="$ctrl.coinsLabel" options="$ctrl.coinsArray" ng-model="$ctrl.coin"></select-component>
+	<input-component label="$ctrl.yearLabel" type="number" ng-model="$ctrl.yearPurchase" min="2012" max="{{$ctrl.year}}"></input-component>
+	
+	<select-component label="$ctrl.monthsLabel" options="$ctrl.monthsArray" ng-model="$ctrl.monthPurchase"></select-component>
+	
+	<input-component label="$ctrl.intervalLabel" type="number" ng-model="$ctrl.interval" min="12" max="24"></input-component>
+	
+	<select-component label="$ctrl.coinsLabel" options="$ctrl.coinsArray" ng-model="$ctrl.coin"></select-component>
+</div>
